@@ -1,0 +1,53 @@
+project:
+  name: bme6938-project2-skinlesions
+  experiment_name: baseline_run
+  seed: 42
+
+paths:
+  dataset_root: /blue/bme6938/share/Datasets/SkinLesions
+  split_manifest_dir: results/logs/splits
+  output_dir: results
+  model_dir: results/models
+  log_dir: results/logs
+  figure_dir: results/figures
+
+data:
+  classes:
+    - acne
+    - eksim
+    - herpes
+    - panu
+    - rosacea
+  img_size: 224
+  num_workers: 4
+  pin_memory: true
+  split:
+    train: 0.70
+    val: 0.15
+    test: 0.15
+  augmentation:
+    horizontal_flip_prob: 0.5
+    vertical_flip_prob: 0.2
+    rotation_degrees: 20
+    color_jitter:
+      brightness: 0.2
+      contrast: 0.2
+      saturation: 0.2
+      hue: 0.02
+
+training:
+  model_name: cnn_baseline
+  batch_size: 32
+  max_epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  early_stopping_patience: 10
+  label_smoothing: 0.0
+  use_amp: true
+
+evaluation:
+  average_types:
+    - macro
+    - weighted
+  save_confusion_matrix: true
+  save_roc_curve: true

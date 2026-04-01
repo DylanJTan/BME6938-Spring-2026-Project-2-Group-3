@@ -1,0 +1,24 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS/editor artifacts
+.DS_Store
+
+# Logs and temporary outputs
+*.log
+tmp/
+
+# Large model artifacts (keep directory, ignore contents)
+results/models/*.pt
+results/models/*.pth
