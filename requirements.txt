@@ -14,21 +14,23 @@
 #   pip freeze > pip-requirements.txt
 
 # NOTE: Do not run `pip install -r requirements.txt` — use the `pt` conda env.
+# Install the skinlesions package itself in editable mode:
+#   pip install -e .
 
-# For documentation, example package set (versions managed in `pt`):
-numpy
-pandas
-scikit-learn
-scipy
-matplotlib
-seaborn
-Pillow
-tqdm
-PyYAML
-torch
-torchvision
-torchaudio
-jupyter
-ipykernel
-opencv-python
-grad-cam
+# For documentation, minimal package set required by the skinlesions package:
+numpy>=1.23
+pandas>=1.5
+scikit-learn>=1.2
+scipy>=1.10
+matplotlib>=3.6
+seaborn>=0.12
+Pillow>=9.0
+tqdm>=4.64
+PyYAML>=6.0
+torch>=2.0
+torchvision>=0.15
+torchaudio>=2.0
+jupyter>=1.0
+ipykernel>=6.0
+opencv-python>=4.7
+grad-cam>=1.4
