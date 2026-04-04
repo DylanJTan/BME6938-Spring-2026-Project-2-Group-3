@@ -9,7 +9,7 @@ dependencies:
   - pytorch>=2.0
   - torchvision>=0.15
   - torchaudio>=2.0
-  - pytorch-cuda=11.8   # adjust to your CUDA version on HiPerGator
+  - pytorch-cuda>=11.7   # adjust to match your HiPerGator CUDA version (nvidia-smi)
   - numpy>=1.23
   - pandas>=1.5
   - scikit-learn>=1.2

@@ -158,6 +158,11 @@ def main() -> None:
         max_epochs: int = int(train_cfg.get("max_epochs", 50))
         best_val_loss = float("inf")
 
+        # Initialise loop variables to guard against an empty range
+        epoch: int = start_epoch
+        train_metrics: dict = {"loss": float("nan"), "acc": float("nan")}
+        val_metrics: dict = {"loss": float("nan"), "acc": float("nan")}
+
         for epoch in range(start_epoch + 1, max_epochs + 1):
             t0 = time.time()
             train_metrics = train_one_epoch(

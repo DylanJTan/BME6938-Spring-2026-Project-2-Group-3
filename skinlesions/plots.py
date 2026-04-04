@@ -12,6 +12,9 @@ import numpy as np
 from sklearn.metrics import roc_curve
 from sklearn.preprocessing import label_binarize
 
+# Small constant for numerical stability in normalisation
+_EPSILON: float = 1e-12
+
 
 def save_confusion_matrix(
     cm: Sequence[Sequence[int]],
@@ -39,7 +42,7 @@ def save_confusion_matrix(
     cm_arr = np.array(cm, dtype=float)
     if normalize:
         row_sums = cm_arr.sum(axis=1, keepdims=True)
-        cm_norm = np.where(row_sums > 0, cm_arr / np.maximum(row_sums, 1e-12), 0.0)
+        cm_norm = np.where(row_sums > 0, cm_arr / np.maximum(row_sums, _EPSILON), 0.0)
     else:
         cm_norm = cm_arr
 
