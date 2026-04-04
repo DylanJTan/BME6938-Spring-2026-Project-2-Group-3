@@ -45,15 +45,22 @@ Scaffold phase complete (documentation, structure, planning). Model implementati
 
 ## Quick Start
 ### 1. Environment
+- Conda environment: `pt` (already created for this project)
 - Python: 3.10 or 3.11 recommended
 - GPU: recommended for full training
 
-### 2. Install Dependencies
+### 2. Activate Environment / Dependencies
+Use the existing conda environment named `pt`. No `pip install` steps are required for normal use.
+
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
+# Activate the project environment
+conda activate pt
+
+# (Optional) Export environment for sharing
+conda env export -n pt > environment.yml
+
+# To recreate from environment.yml on another machine
+conda env create -f environment.yml -n pt
 ```
 
 ### 3. Configure Paths
@@ -62,6 +69,7 @@ Update paths and experiment settings in configs/config.yaml if needed.
 ### 4. Run Pipeline (Scaffold Commands)
 These commands are the target interface and will become fully functional as implementation progresses.
 ```bash
+# Ensure conda env is active: conda activate pt
 python -m src.train --config configs/config.yaml --model cnn_baseline
 python -m src.train --config configs/config.yaml --model resnet18_transfer
 python -m src.evaluate --config configs/config.yaml --checkpoint results/models/best.pt
