@@ -7,6 +7,8 @@
 4. Config template added at configs/config.yaml.
 5. Master project plan added at docs/Project2_Implementation_Plan.md.
 6. Starter Python entrypoint files and package layout created.
+7. Updated README and requirements.txt to use conda environment 'pt' instead of pip installs.
+8. Created EDA notebook at notebooks/01_eda.ipynb with class distribution, sample images, and image size analysis.
 
 ## Canonical Plan Reference
 Follow this document as the source of truth:
@@ -15,7 +17,8 @@ Follow this document as the source of truth:
 ## Current State Snapshot
 1. Data path confirmed: /blue/bme6938/share/Datasets/SkinLesions
 2. Data layout confirmed: flat class folders, no predefined splits.
-3. Core code implementation is still pending.
+3. Environment setup updated to use conda env 'pt'.
+4. EDA notebook created and ready for review.
 
 ## Priority Next Tasks (In Order)
 1. Implement dataset indexing and stratified split generator.
@@ -23,7 +26,7 @@ Follow this document as the source of truth:
 3. Build custom CNN baseline and ResNet-18 transfer wrapper.
 4. Implement training loop with scheduler, early stopping, checkpointing.
 5. Implement evaluation metrics and plot generation.
-6. Create notebooks/01_eda.ipynb and notebooks/99_demo.ipynb.
+6. Create notebooks/99_demo.ipynb.
 
 ## Required Output Contracts
 1. Training should output:

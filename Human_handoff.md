@@ -12,16 +12,17 @@ The repository has been scaffolded and documented to align with the course rubri
 
 ## What Is Ready
 1. Rubric-oriented README draft
-2. Pinned requirements
+2. Pinned requirements (updated for conda env 'pt')
 3. Config template with dataset path and training defaults
 4. Written implementation plan with phases and verification checklist
 5. Handoff guidance for next coding agent
+6. EDA notebook at notebooks/01_eda.ipynb
 
 ## What Still Needs To Be Built
 1. Data indexing and deterministic split generation
 2. Training and evaluation pipelines
 3. Baseline CNN and transfer-learning model implementations
-4. EDA notebook and demo notebook
+4. Demo notebook (notebooks/99_demo.ipynb)
 5. Final metrics tables/figures for report inclusion
 
 ## Paths To Know
@@ -39,7 +40,7 @@ The repository has been scaffolded and documented to align with the course rubri
 4. Log team member roles directly in README while work is fresh.
 
 ## Rubric Risk Watchlist
-1. Missing EDA notebook and demo notebook (required for full repository points).
+1. Missing demo notebook (notebooks/99_demo.ipynb) (required for full repository points).
 2. Literature citation minimums for report still pending.
 3. Need explicit dataset citation/license language in final report and README.
 4. Need clear commit history from multiple teammates.
