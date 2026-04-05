@@ -14,6 +14,8 @@ Full pipeline implemented. Run the commands below to reproduce all experiments e
 - Structure: one folder per class with image files directly inside each class folder
 - Classes: `acne`, `eksim`, `herpes`, `panu`, `rosacea`
 - Dataset access: course-provided storage path above (not redistributed in this repo)
+- The dataset is originally from the MedMNIST Zenodo and group, in this case the DermaMNIST set that can be accessed at https://github.com/MedMNIST/MedMNIST
+- To recreate, edit all paths for code to your data path that stores the DermaMNIST dataset.
 - License/citation: Refer to the bottom of this README.md
 
 ## Repository Structure
@@ -267,13 +269,6 @@ All members contributed to the report itself equally.
 - Member 1: Dylan Tan - Training/Eval/Results/Init
 - Member 2: Lauren Plummer - EDA, Literature Review
 - Member 3: Riley Bendure — Training/Eval, Literature Review
-
-
-Suggested role split:
-- Data/EDA
-- Modeling/Training
-- Evaluation/Visualization
-- Report/Documentation
 
 ## AI Usage Disclosure
 AI coding assistance was used for implementation support. Team members remain responsible for validating, understanding, and testing all code and analyses.
