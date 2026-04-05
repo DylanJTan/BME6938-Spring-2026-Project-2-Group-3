@@ -22,3 +22,8 @@ tmp/
 # Large model artifacts (keep directory, ignore contents)
 results/models/*.pt
 results/models/*.pth
+
+# Egg / build artifacts
+*.egg-info/
+dist/
+build/

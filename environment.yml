@@ -1,0 +1,27 @@
+name: pt
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pytorch>=2.0
+  - torchvision>=0.15
+  - torchaudio>=2.0
+  - pytorch-cuda>=11.7   # adjust to match your HiPerGator CUDA version (nvidia-smi)
+  - numpy>=1.23
+  - pandas>=1.5
+  - scikit-learn>=1.2
+  - scipy>=1.10
+  - matplotlib>=3.6
+  - seaborn>=0.12
+  - pillow>=9.0
+  - tqdm>=4.64
+  - pyyaml>=6.0
+  - jupyter
+  - ipykernel
+  - pip
+  - pip:
+      - opencv-python>=4.7
+      - grad-cam>=1.4
