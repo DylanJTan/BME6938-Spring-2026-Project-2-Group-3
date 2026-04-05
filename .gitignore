@@ -19,6 +19,10 @@ venv/
 *.log
 tmp/
 
+# Local submission-only docs (do not commit)
+docs/Submission_Checklist.md
+docs/Project2_Report_Draft.md
+
 # Large model artifacts (keep directory, ignore contents)
 results/models/*.pt
 results/models/*.pth

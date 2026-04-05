@@ -19,7 +19,7 @@ data:
     - panu
     - rosacea
   img_size: 224
-  num_workers: 4
+  num_workers: 2
   pin_memory: true
   split:
     train: 0.70
@@ -43,6 +43,8 @@ training:
   weight_decay: 0.0001
   early_stopping_patience: 10
   label_smoothing: 0.0
+  class_weighting: none  # options: none, balanced
+  freeze_backbone_epochs: 0  # use >0 for transfer models
   use_amp: true
 
 evaluation:

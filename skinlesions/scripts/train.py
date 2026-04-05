@@ -21,10 +21,11 @@ import time
 from pathlib import Path
 from typing import Optional
 
+import numpy as np
 import torch
 import torch.nn as nn
 import yaml
-from torch.cuda.amp import GradScaler
+from torch.amp import GradScaler
 
 from skinlesions.data.loader import build_dataloaders
 from skinlesions.models import build_model
@@ -51,6 +52,15 @@ def _resolve_path(p: str | Path, base: Optional[Path] = None) -> Path:
     return p.resolve()
 
 
+def _resolve_project_root(cfg_path: Path) -> Path:
+    """Infer repository root from config file location."""
+    if (cfg_path.parent / "setup.py").exists():
+        return cfg_path.parent.resolve()
+    if (cfg_path.parent.parent / "setup.py").exists():
+        return cfg_path.parent.parent.resolve()
+    return cfg_path.parent.resolve()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Train a skin lesion classifier")
     parser.add_argument("--config", type=Path, default=Path("configs/config.yaml"))
@@ -61,6 +71,32 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume", type=Path, default=None,
                         help="Path to a checkpoint to resume training from")
     return parser.parse_args()
+
+
+def _set_backbone_trainable(model: nn.Module, model_name: str, trainable: bool) -> None:
+    """Freeze/unfreeze transfer-learning backbone while keeping classifier trainable."""
+    name = model_name.lower()
+    if name == "cnn_baseline":
+        return
+
+    if name.startswith("resnet"):
+        for n, p in model.named_parameters():
+            p.requires_grad = trainable or n.startswith("fc.")
+        return
+
+    if name == "efficientnet_b0":
+        for n, p in model.named_parameters():
+            p.requires_grad = trainable or n.startswith("classifier.")
+
+
+def _compute_balanced_class_weights(loader, num_classes: int, device: torch.device) -> torch.Tensor:
+    """Compute inverse-frequency class weights from training labels."""
+    labels = [label for _, label in loader.dataset.samples]
+    counts = np.bincount(np.array(labels, dtype=np.int64), minlength=num_classes)
+    total = counts.sum()
+    counts = np.clip(counts, a_min=1, a_max=None)
+    weights = total / (num_classes * counts)
+    return torch.tensor(weights, dtype=torch.float32, device=device)
 
 
 # ---------------------------------------------------------------------------
@@ -77,7 +113,7 @@ def main() -> None:
     with cfg_path.open("r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
-    repo_root = cfg_path.parent.resolve()
+    repo_root = _resolve_project_root(cfg_path)
 
     # --- experiment identity -----------------------------------------------
     proj_cfg = cfg.get("project", {})
@@ -117,23 +153,38 @@ def main() -> None:
     model = build_model(model_name, num_classes=num_classes)
     model.to(device)
 
+    freeze_backbone_epochs: int = int(train_cfg.get("freeze_backbone_epochs", 0))
+    if freeze_backbone_epochs > 0:
+        _set_backbone_trainable(model, model_name, trainable=False)
+        print(f"[train] Freezing transfer backbone for first {freeze_backbone_epochs} epoch(s)")
+
     # --- loss ----------------------------------------------------------------
     label_smoothing: float = float(train_cfg.get("label_smoothing", 0.0))
-    criterion = nn.CrossEntropyLoss(label_smoothing=label_smoothing)
+    class_weighting: str = str(train_cfg.get("class_weighting", "none")).lower()
+    class_weights = None
+    if class_weighting == "balanced":
+        class_weights = _compute_balanced_class_weights(
+            loaders["train"], num_classes=num_classes, device=device
+        )
+        print(f"[train] Using balanced class weights: {class_weights.detach().cpu().tolist()}")
+
+    criterion = nn.CrossEntropyLoss(
+        weight=class_weights,
+        label_smoothing=label_smoothing,
+    )
 
     # --- optimiser -----------------------------------------------------------
     lr: float = float(train_cfg.get("learning_rate", 1e-3))
     wd: float = float(train_cfg.get("weight_decay", 1e-4))
-    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=wd)
+    trainable_params = [p for p in model.parameters() if p.requires_grad]
+    optimizer = torch.optim.AdamW(trainable_params, lr=lr, weight_decay=wd)
 
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer,
-        T_max=int(train_cfg.get("max_epochs", 50)),
-    )
+    max_epochs: int = int(train_cfg.get("max_epochs", 50))
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=max_epochs)
 
     # --- AMP -----------------------------------------------------------------
     use_amp: bool = bool(train_cfg.get("use_amp", True)) and device.type == "cuda"
-    scaler: Optional[GradScaler] = GradScaler() if use_amp else None
+    scaler: Optional[GradScaler] = GradScaler("cuda") if use_amp else None
 
     # --- early stopping & checkpointing -------------------------------------
     patience: int = int(train_cfg.get("early_stopping_patience", 10))
@@ -155,7 +206,6 @@ def main() -> None:
         writer = csv.writer(fcsv)
         writer.writerow(["epoch", "train_loss", "train_acc", "val_loss", "val_acc", "elapsed_s"])
 
-        max_epochs: int = int(train_cfg.get("max_epochs", 50))
         best_val_loss = float("inf")
 
         # Initialise loop variables to guard against an empty range
@@ -164,6 +214,17 @@ def main() -> None:
         val_metrics: dict = {"loss": float("nan"), "acc": float("nan")}
 
         for epoch in range(start_epoch + 1, max_epochs + 1):
+            if freeze_backbone_epochs > 0 and epoch == freeze_backbone_epochs + 1:
+                _set_backbone_trainable(model, model_name, trainable=True)
+                # Rebuild optimiser/scheduler so newly unfrozen params are updated.
+                current_lr = optimizer.param_groups[0]["lr"]
+                optimizer = torch.optim.AdamW(model.parameters(), lr=current_lr, weight_decay=wd)
+                scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+                    optimizer,
+                    T_max=max_epochs - epoch + 1,
+                )
+                print("[train] Unfroze transfer backbone and rebuilt optimizer/scheduler")
+
             t0 = time.time()
             train_metrics = train_one_epoch(
                 model, loaders["train"], criterion, optimizer, device, scaler

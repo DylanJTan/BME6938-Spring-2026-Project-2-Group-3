@@ -1,5 +1,34 @@
 # Agent Handoff
 
+## Update (2026-04-05)
+1. Replaced `requirements.txt` with a direct export from conda env `pt` (`conda list -n pt --export`).
+2. Filled legacy `src/` gaps by wiring:
+   - `src/train.py` -> `skinlesions.scripts.train:main`
+   - `src/evaluate.py` -> `skinlesions.scripts.evaluate:main`
+3. Added required demo notebook:
+   - `notebooks/99_demo.ipynb`
+4. Implemented two pending plan items in training:
+   - Class imbalance handling via `training.class_weighting` (`none` | `balanced`)
+   - Transfer warmup/fine-tune via `training.freeze_backbone_epochs`
+5. Added new config keys in `configs/config.yaml`:
+   - `training.class_weighting`
+   - `training.freeze_backbone_epochs`
+6. Completed full 4-model training + evaluation benchmark and generated report artifacts.
+
+## Completed Benchmarks (2026-04-05)
+Test-split comparison from `results/logs/comparison.md`:
+1. `cnn_baseline`: accuracy 0.7399, macro F1 0.7330
+2. `resnet18_pretrained`: accuracy 0.9731, macro F1 0.9729
+3. `resnet50_pretrained`: accuracy 0.9686, macro F1 0.9685
+4. `efficientnet_b0`: accuracy 0.9955, macro F1 0.9955
+
+Generated artifacts include:
+1. `results/models/best_*.pt` and `results/models/last_*.pt` for all runs.
+2. `results/logs/metrics_*.csv` (training histories).
+3. `results/logs/metrics_*.json` (test metrics per checkpoint).
+4. `results/logs/comparison.json` and `results/logs/comparison.md`.
+5. `results/figures/confusion_matrix_*.png`, `results/figures/roc_ovr_*.png`, and `results/figures/training_curves_*.png`.
+
 ## What Has Been Completed
 1. Repository scaffold created for Project 2.
 2. Rubric-aligned README draft created.
@@ -21,12 +50,10 @@ Follow this document as the source of truth:
 4. EDA notebook created and ready for review.
 
 ## Priority Next Tasks (In Order)
-1. Implement dataset indexing and stratified split generator.
-2. Implement transform pipelines for train/val/test.
-3. Build custom CNN baseline and ResNet-18 transfer wrapper.
-4. Implement training loop with scheduler, early stopping, checkpointing.
-5. Implement evaluation metrics and plot generation.
-6. Create notebooks/99_demo.ipynb.
+1. Finalize README `Authors and Contributions` and citation/license text.
+2. Curate best report figures (confusion matrices, ROC, training curves) from generated outputs.
+3. Write report analysis comparing baseline vs transfer results and overfitting behavior.
+4. Optionally run ablations using `class_weighting=balanced` and `freeze_backbone_epochs>0`.
 
 ## Required Output Contracts
 1. Training should output:

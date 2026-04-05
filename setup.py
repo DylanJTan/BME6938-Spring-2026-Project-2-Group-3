@@ -18,9 +18,8 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "skinlesions-make-splits=skinlesions.scripts.make_splits:main",
-            "skinlesions-train=skinlesions.scripts.train:main",
-            "skinlesions-evaluate=skinlesions.scripts.evaluate:main",
+            "skinlesions-run-full=skinlesions.scripts.run_full:main",
+            "skinlesions-generate-figures=skinlesions.scripts.generate_figures:main",
         ]
     },
 )

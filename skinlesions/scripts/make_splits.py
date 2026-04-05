@@ -17,6 +17,15 @@ import yaml
 from skinlesions.data.splits import collect_images, stratified_split, write_manifest
 
 
+def _resolve_project_root(cfg_path: Path) -> Path:
+    """Infer repository root from config file location."""
+    if (cfg_path.parent / "setup.py").exists():
+        return cfg_path.parent.resolve()
+    if (cfg_path.parent.parent / "setup.py").exists():
+        return cfg_path.parent.parent.resolve()
+    return cfg_path.parent.resolve()
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Create train/val/test split manifests")
     p.add_argument("--config", type=Path, default=Path("configs/config.yaml"),
@@ -49,16 +58,18 @@ def main() -> None:
     with cfg_path.open("r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
+    repo_root = _resolve_project_root(cfg_path)
+
     # Resolve paths from config (CLI args take precedence)
     dataset_root = Path(cfg["paths"]["dataset_root"])
     if not dataset_root.is_absolute():
-        dataset_root = (cfg_path.parent / dataset_root).resolve()
+        dataset_root = (repo_root / dataset_root).resolve()
 
     outdir = args.outdir
     if outdir is None:
         outdir = Path(cfg["paths"].get("split_manifest_dir", "results/logs/splits"))
     if not outdir.is_absolute():
-        outdir = (cfg_path.parent / outdir).resolve()
+        outdir = (repo_root / outdir).resolve()
 
     split_cfg = cfg.get("data", {}).get("split", {})
     train_frac = args.train_frac if args.train_frac is not None else float(split_cfg.get("train", 0.70))

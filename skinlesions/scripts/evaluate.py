@@ -44,6 +44,15 @@ def _resolve_path(p, base=None):
     return p.resolve()
 
 
+def _resolve_project_root(cfg_path: Path) -> Path:
+    """Infer repository root from config file location."""
+    if (cfg_path.parent / "setup.py").exists():
+        return cfg_path.parent.resolve()
+    if (cfg_path.parent.parent / "setup.py").exists():
+        return cfg_path.parent.parent.resolve()
+    return cfg_path.parent.resolve()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate skin lesion classifiers")
     parser.add_argument("--config", type=Path, default=Path("configs/config.yaml"))
@@ -158,7 +167,7 @@ def main() -> None:
     with cfg_path.open("r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
-    repo_root = cfg_path.parent.resolve()
+    repo_root = _resolve_project_root(cfg_path)
     paths_cfg = cfg.get("paths", {})
     figure_dir = _resolve_path(paths_cfg.get("figure_dir", "results/figures"), repo_root)
     log_dir = _resolve_path(paths_cfg.get("log_dir", "results/logs"), repo_root)

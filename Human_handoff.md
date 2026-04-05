@@ -1,4 +1,17 @@
 # Human Handoff
+Update (2026-04-05):
+- Legacy scaffold TODO scripts in `src/` are now functional wrappers.
+- `notebooks/99_demo.ipynb` has been created.
+- Training now supports class-balanced loss and transfer-backbone warmup freeze.
+- `requirements.txt` now mirrors the current `pt` conda env export.
+- Full benchmark runs completed with 4 models and comparison artifacts generated.
+
+Latest test-set results (`results/logs/comparison.md`):
+- cnn_baseline: accuracy 0.7399, macro F1 0.7330
+- resnet18_pretrained: accuracy 0.9731, macro F1 0.9729
+- resnet50_pretrained: accuracy 0.9686, macro F1 0.9685
+- efficientnet_b0: accuracy 0.9955, macro F1 0.9955
+
 Human status here:
 We can start to build based off the "What Still Needs To Be Built" section below.
 I have reviewed the AI status below, it makes sense.
@@ -19,11 +32,9 @@ The repository has been scaffolded and documented to align with the course rubri
 6. EDA notebook at notebooks/01_eda.ipynb
 
 ## What Still Needs To Be Built
-1. Data indexing and deterministic split generation
-2. Training and evaluation pipelines
-3. Baseline CNN and transfer-learning model implementations
-4. Demo notebook (notebooks/99_demo.ipynb)
-5. Final metrics tables/figures for report inclusion
+1. Fill README author/role section and literature/data citation language.
+2. Select/annotate final figures/tables for the written report.
+3. Draft report interpretation/discussion based on generated metrics.
 
 ## Paths To Know
 1. Dataset root:

@@ -11,7 +11,7 @@ from typing import Dict, Optional, Tuple
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.cuda.amp import GradScaler, autocast
+from torch.amp import GradScaler, autocast
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 
@@ -108,7 +108,7 @@ def train_one_epoch(
         optimizer.zero_grad()
 
         if scaler is not None:
-            with autocast():
+            with autocast(device_type="cuda"):
                 outputs = model(images)
                 loss = criterion(outputs, labels)
             scaler.scale(loss).backward()

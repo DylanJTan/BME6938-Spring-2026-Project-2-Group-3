@@ -1,0 +1,410 @@
+[
+  {
+    "accuracy": 0.7399103139013453,
+    "confusion_matrix": [
+      [
+        33,
+        1,
+        3,
+        2,
+        6
+      ],
+      [
+        7,
+        19,
+        12,
+        0,
+        6
+      ],
+      [
+        2,
+        4,
+        36,
+        1,
+        2
+      ],
+      [
+        1,
+        3,
+        0,
+        40,
+        0
+      ],
+      [
+        2,
+        4,
+        2,
+        0,
+        37
+      ]
+    ],
+    "classification_report": {
+      "acne": {
+        "precision": 0.7333333333333333,
+        "recall": 0.7333333333333333,
+        "f1-score": 0.7333333333333333,
+        "support": 45.0
+      },
+      "eksim": {
+        "precision": 0.6129032258064516,
+        "recall": 0.4318181818181818,
+        "f1-score": 0.5066666666666667,
+        "support": 44.0
+      },
+      "herpes": {
+        "precision": 0.6792452830188679,
+        "recall": 0.8,
+        "f1-score": 0.7346938775510204,
+        "support": 45.0
+      },
+      "panu": {
+        "precision": 0.9302325581395349,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.9195402298850575,
+        "support": 44.0
+      },
+      "rosacea": {
+        "precision": 0.7254901960784313,
+        "recall": 0.8222222222222222,
+        "f1-score": 0.7708333333333334,
+        "support": 45.0
+      },
+      "accuracy": 0.7399103139013453,
+      "macro avg": {
+        "precision": 0.7362409192753238,
+        "recall": 0.7392929292929292,
+        "f1-score": 0.7330134881538822,
+        "support": 223.0
+      },
+      "weighted avg": {
+        "precision": 0.7359240854394704,
+        "recall": 0.7399103139013453,
+        "f1-score": 0.7331920535339542,
+        "support": 223.0
+      }
+    },
+    "precision_macro": 0.7362409192753238,
+    "recall_macro": 0.7392929292929292,
+    "f1_macro": 0.7330134881538822,
+    "precision_weighted": 0.7359240854394704,
+    "recall_weighted": 0.7399103139013453,
+    "f1_weighted": 0.7331920535339542,
+    "roc_auc_ovr": {
+      "acne": 0.9343320848938826,
+      "eksim": 0.824149314372778,
+      "herpes": 0.9425717852684143,
+      "panu": 0.9869222955815135,
+      "rosacea": 0.9621722846441947
+    },
+    "roc_auc_macro": 0.9300295529521566,
+    "model_name": "cnn_baseline",
+    "checkpoint": "results/models/best_cnn_baseline_baseline_run.pt",
+    "split": "test"
+  },
+  {
+    "accuracy": 0.9730941704035875,
+    "confusion_matrix": [
+      [
+        44,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        40,
+        1,
+        0,
+        3
+      ],
+      [
+        0,
+        0,
+        45,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        44,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        44
+      ]
+    ],
+    "classification_report": {
+      "acne": {
+        "precision": 1.0,
+        "recall": 0.9777777777777777,
+        "f1-score": 0.9887640449438202,
+        "support": 45.0
+      },
+      "eksim": {
+        "precision": 0.9523809523809523,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.9302325581395349,
+        "support": 44.0
+      },
+      "herpes": {
+        "precision": 0.9782608695652174,
+        "recall": 1.0,
+        "f1-score": 0.989010989010989,
+        "support": 45.0
+      },
+      "panu": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 44.0
+      },
+      "rosacea": {
+        "precision": 0.9361702127659575,
+        "recall": 0.9777777777777777,
+        "f1-score": 0.9565217391304348,
+        "support": 45.0
+      },
+      "accuracy": 0.9730941704035875,
+      "macro avg": {
+        "precision": 0.9733624069424256,
+        "recall": 0.972929292929293,
+        "f1-score": 0.9729058662449559,
+        "support": 223.0
+      },
+      "weighted avg": {
+        "precision": 0.9733370430926671,
+        "recall": 0.9730941704035875,
+        "f1-score": 0.9729757280133432,
+        "support": 223.0
+      }
+    },
+    "precision_macro": 0.9733624069424256,
+    "recall_macro": 0.972929292929293,
+    "f1_macro": 0.9729058662449559,
+    "precision_weighted": 0.9733370430926671,
+    "recall_weighted": 0.9730941704035875,
+    "f1_weighted": 0.9729757280133432,
+    "roc_auc_ovr": {
+      "acne": 1.0,
+      "eksim": 0.9965718638902996,
+      "herpes": 0.9995006242197253,
+      "panu": 1.0,
+      "rosacea": 0.9995006242197253
+    },
+    "roc_auc_macro": 0.9991146224659501,
+    "model_name": "resnet18_pretrained",
+    "checkpoint": "results/models/best_resnet18_pretrained_resnet18_run.pt",
+    "split": "test"
+  },
+  {
+    "accuracy": 0.968609865470852,
+    "confusion_matrix": [
+      [
+        43,
+        2,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        40,
+        2,
+        0,
+        2
+      ],
+      [
+        0,
+        0,
+        45,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        44,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        44
+      ]
+    ],
+    "classification_report": {
+      "acne": {
+        "precision": 1.0,
+        "recall": 0.9555555555555556,
+        "f1-score": 0.9772727272727273,
+        "support": 45.0
+      },
+      "eksim": {
+        "precision": 0.9523809523809523,
+        "recall": 0.9090909090909091,
+        "f1-score": 0.9302325581395349,
+        "support": 44.0
+      },
+      "herpes": {
+        "precision": 0.9375,
+        "recall": 1.0,
+        "f1-score": 0.967741935483871,
+        "support": 45.0
+      },
+      "panu": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 44.0
+      },
+      "rosacea": {
+        "precision": 0.9565217391304348,
+        "recall": 0.9777777777777777,
+        "f1-score": 0.967032967032967,
+        "support": 45.0
+      },
+      "accuracy": 0.968609865470852,
+      "macro avg": {
+        "precision": 0.9692805383022775,
+        "recall": 0.9684848484848485,
+        "f1-score": 0.9684560375858201,
+        "support": 223.0
+      },
+      "weighted avg": {
+        "precision": 0.9692185657651635,
+        "recall": 0.968609865470852,
+        "f1-score": 0.9684859905769952,
+        "support": 223.0
+      }
+    },
+    "precision_macro": 0.9692805383022775,
+    "recall_macro": 0.9684848484848485,
+    "f1_macro": 0.9684560375858201,
+    "precision_weighted": 0.9692185657651635,
+    "recall_weighted": 0.968609865470852,
+    "f1_weighted": 0.9684859905769952,
+    "roc_auc_ovr": {
+      "acne": 0.9993757802746567,
+      "eksim": 0.9964448958862366,
+      "herpes": 0.9995006242197253,
+      "panu": 1.0,
+      "rosacea": 0.9995006242197253
+    },
+    "roc_auc_macro": 0.9989643849200688,
+    "model_name": "resnet50_pretrained",
+    "checkpoint": "results/models/best_resnet50_pretrained_resnet50_run.pt",
+    "split": "test"
+  },
+  {
+    "accuracy": 0.9955156950672646,
+    "confusion_matrix": [
+      [
+        45,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        43,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        45,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        44,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        45
+      ]
+    ],
+    "classification_report": {
+      "acne": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 45.0
+      },
+      "eksim": {
+        "precision": 1.0,
+        "recall": 0.9772727272727273,
+        "f1-score": 0.9885057471264368,
+        "support": 44.0
+      },
+      "herpes": {
+        "precision": 0.9782608695652174,
+        "recall": 1.0,
+        "f1-score": 0.989010989010989,
+        "support": 45.0
+      },
+      "panu": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 44.0
+      },
+      "rosacea": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 45.0
+      },
+      "accuracy": 0.9955156950672646,
+      "macro avg": {
+        "precision": 0.9956521739130434,
+        "recall": 0.9954545454545455,
+        "f1-score": 0.9955033472274852,
+        "support": 223.0
+      },
+      "weighted avg": {
+        "precision": 0.9956131799571066,
+        "recall": 0.9955156950672646,
+        "f1-score": 0.9955145622379271,
+        "support": 223.0
+      }
+    },
+    "precision_macro": 0.9956521739130434,
+    "recall_macro": 0.9954545454545455,
+    "f1_macro": 0.9955033472274852,
+    "precision_weighted": 0.9956131799571066,
+    "recall_weighted": 0.9955156950672646,
+    "f1_weighted": 0.9955145622379271,
+    "roc_auc_ovr": {
+      "acne": 1.0,
+      "eksim": 1.0,
+      "herpes": 1.0,
+      "panu": 1.0,
+      "rosacea": 1.0
+    },
+    "roc_auc_macro": 1.0,
+    "model_name": "efficientnet_b0",
+    "checkpoint": "results/models/best_efficientnet_b0_effb0_run.pt",
+    "split": "test"
+  }
+]
